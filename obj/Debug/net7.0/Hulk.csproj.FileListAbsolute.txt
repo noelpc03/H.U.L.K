@@ -1,0 +1,15 @@
+D:\Programación\Proyectos\Hulk\bin\Debug\net7.0\Hulk.exe
+D:\Programación\Proyectos\Hulk\bin\Debug\net7.0\Hulk.deps.json
+D:\Programación\Proyectos\Hulk\bin\Debug\net7.0\Hulk.runtimeconfig.json
+D:\Programación\Proyectos\Hulk\bin\Debug\net7.0\Hulk.dll
+D:\Programación\Proyectos\Hulk\bin\Debug\net7.0\Hulk.pdb
+D:\Programación\Proyectos\Hulk\obj\Debug\net7.0\Hulk.csproj.AssemblyReference.cache
+D:\Programación\Proyectos\Hulk\obj\Debug\net7.0\Hulk.GeneratedMSBuildEditorConfig.editorconfig
+D:\Programación\Proyectos\Hulk\obj\Debug\net7.0\Hulk.AssemblyInfoInputs.cache
+D:\Programación\Proyectos\Hulk\obj\Debug\net7.0\Hulk.AssemblyInfo.cs
+D:\Programación\Proyectos\Hulk\obj\Debug\net7.0\Hulk.csproj.CoreCompileInputs.cache
+D:\Programación\Proyectos\Hulk\obj\Debug\net7.0\Hulk.dll
+D:\Programación\Proyectos\Hulk\obj\Debug\net7.0\refint\Hulk.dll
+D:\Programación\Proyectos\Hulk\obj\Debug\net7.0\Hulk.pdb
+D:\Programación\Proyectos\Hulk\obj\Debug\net7.0\Hulk.genruntimeconfig.cache
+D:\Programación\Proyectos\Hulk\obj\Debug\net7.0\ref\Hulk.dll
