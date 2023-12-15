@@ -10,18 +10,18 @@ public class Parser
     {
         TokenList = tokenList;
         position = 0;
-        actualToken = TokenList[position]; 
+        actualToken = TokenList[position];
     }
     public AST Instruccion()
     {
 
         Instruccion node = new Instruccion(Not());
-        if(actualToken.Type!=TokenType.SEMICOLON)
+        if (actualToken.Type != TokenType.SEMICOLON)
         {
             Error.Syntax($"unexpected token:{actualToken.Type}. Expected: semicolon");
         }
         GetNextPosition();
-        if(actualToken.Type!=TokenType.EOF)
+        if (actualToken.Type != TokenType.EOF)
         {
             Error.Syntax($"unexpected token:{actualToken.Type}. Expected: EOF");
         }
@@ -183,7 +183,7 @@ public class Parser
                 break;
             case TokenType.L_PARENT:
                 GetNextPosition();
-                node = Not(); 
+                node = Not();
                 Test(TokenType.R_PARENT);
                 break;
             case TokenType.STRING:

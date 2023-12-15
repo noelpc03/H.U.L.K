@@ -29,7 +29,7 @@ public class FUNCTION : AST
         name = names.Value;
         this.argumentos = argumentos;
         this.Statement = Statement;
-        Program2.Funciones.Add(names.Value, this);
+        Hulk.Funciones.Add(names.Value, this);
     }
 
 

@@ -1,6 +1,6 @@
-Program2.Main();
+Hulk.Main();
 
-static class Program2
+static class Hulk
 {
 
     public static Dictionary<string, FUNCTION> Funciones = new Dictionary<string, FUNCTION>();
@@ -22,19 +22,19 @@ static class Program2
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write(">");
                     Console.ForegroundColor = ConsoleColor.Green;
-                    //Pincha(Console.ReadLine()!);
                     try
                     {
-                        Pincha(Console.ReadLine()!);
+                        Start(Console.ReadLine()!);
                     }
                     catch (Exception ex)
                     {
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine($"{ex.Message}.Try again please.");
                     }
-                    foreach (var item in Funciones)
-                    {
-                        Console.WriteLine(item.Key);
-                    }
+                    // foreach (var item in Funciones)
+                    // {
+                    //     Console.WriteLine(item.Key);
+                    // }
                 }
 
                 else if (key == ConsoleKey.Escape)
@@ -46,12 +46,12 @@ static class Program2
         }
 
 
-        static void Pincha(string entrance)
+        static void Start(string entrance)
         {
             Lexer lexer = new Lexer(entrance);
             if (lexer.TokenList.Count != 0)
             {
-                Console.WriteLine(string.Join('\n', lexer.TokenList));
+                //Console.WriteLine(string.Join('\n', lexer.TokenList));
                 Parser parser = new Parser(lexer.TokenList);
                 Interpreter interpreter = new Interpreter(parser);
                 Console.WriteLine(Convert.ToString(interpreter.Interpreter0()));

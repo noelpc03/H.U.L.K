@@ -55,6 +55,10 @@ public abstract class NodeVisitor
         {
             return VisitVar((Var)node);
         }
+        if (node is Instruccion)
+        {
+            return VisitInstruccion((Instruccion)node);
+        }
         return null!;
     }
     public abstract object VisitNum(Number node);
@@ -70,6 +74,7 @@ public abstract class NodeVisitor
     public abstract object VisitDeclaration(Declaration node);
     public abstract object VisitVar(Var node);
     public abstract object VisitCallFunctiones(CallFUNCTION node);
+    public abstract object VisitInstruccion(Instruccion node);
 }
 
 public class Interpreter : NodeVisitor
@@ -88,6 +93,10 @@ public class Interpreter : NodeVisitor
         //Console.WriteLine(tree);
         return Visit(tree);
     }
+    public override object VisitInstruccion(Instruccion node)
+    {
+        return Visit(node.node);
+    }
 
     public override object VisitCallFunctiones(CallFUNCTION node)
     {
@@ -95,11 +104,11 @@ public class Interpreter : NodeVisitor
         Dictionary<string, object> dic = new Dictionary<string, object>(Scope);
 
 
-        if (Program2.Funciones.ContainsKey(node.name))
+        if (Hulk.Funciones.ContainsKey(node.name))
         {
             int i = 0;
 
-            Dictionary<string, object> local = new Dictionary<string, object>(Program2.Funciones[node.name].argumentos);
+            Dictionary<string, object> local = new Dictionary<string, object>(Hulk.Funciones[node.name].argumentos);
             // se crea un diccionario local para modificar los valores de local sin cambiar los de la variable estatica
 
 
@@ -122,7 +131,7 @@ public class Interpreter : NodeVisitor
             }
             Scope = local;
 
-            object tree = Visit(Program2.Funciones[node.name].Statement);
+            object tree = Visit(Hulk.Funciones[node.name].Statement);
             Scope = dic;
             // while (Scope.Count() > count) Scope.Remove(Scope.Keys.Last());
             return tree;
@@ -133,11 +142,11 @@ public class Interpreter : NodeVisitor
     }
     public override object VisitNum(Number node)
     {
-        return node.Value;
+        return Convert.ToSingle(node);
     }
     public override object VisitString(String node)
     {
-        return node.Value;
+        return Convert.ToString(node.Value)!;
     }
     public override object VisitUnaryOparator(UnaryOparator node)
     {
@@ -146,7 +155,7 @@ public class Interpreter : NodeVisitor
         {
             return !x;
         }
-        else if (right is double)
+        else if (right is float)
         {
             Error.Semantic($"Unary Operator \"! \" cannot be used with number");
         }
@@ -156,7 +165,7 @@ public class Interpreter : NodeVisitor
     }
     public override object VisitBoolean(Bool node)
     {
-        return node.Value;
+        return Convert.ToBoolean(node.Value);
     }
     public override object VisitConditional(Condicional node)
     {
@@ -178,9 +187,9 @@ public class Interpreter : NodeVisitor
     }
     public override object VisitSen(Sen node)
     {
-        if (Visit(node.Statement) is double x)
+        if (Visit(node.Statement) is float x)
         {
-            return Math.Sin(x);
+            return (float)Math.Sin(x);
         }
         Error.Semantic($"you can not use \"sen\" with a non doble expression");
         throw new Exception();
@@ -188,9 +197,9 @@ public class Interpreter : NodeVisitor
     }
     public override object VisitCos(Cos node)
     {
-        if (Visit(node.Statement) is double x)
+        if (Visit(node.Statement) is float x)
         {
-            return Math.Cos(x);
+            return (float)Math.Cos(x);
         }
         Error.Semantic($"you can not use \"cos\" with a non doble expression");
         throw new Exception();
@@ -215,26 +224,24 @@ public class Interpreter : NodeVisitor
         if (!(node.bases is null))
         {
             object item = Visit(node.bases);
-            if (!(item is double))
+            if (!(item is float))
             {
                 Error.Semantic("The base of logarithm is a double variable");
             }
 
-            if (Convert.ToDouble(item) <= 0 || Convert.ToDouble(item) == 1)
+            if (Convert.ToSingle(item) <= 0 || Convert.ToSingle(item) == 1)
             {
                 Error.Semantic("Logarithm to base less 0 or 1 is not defined");
             }
 
-            return Math.Log(Convert.ToDouble(tree)) / Math.Log(Convert.ToDouble(item));
+            return (float)Math.Log(Convert.ToSingle(tree)) / (float)Math.Log(Convert.ToSingle(item));
         }
-        return Math.Log(Convert.ToDouble(tree));
+        return (float)Math.Log(Convert.ToSingle(tree));
     }
 
     public override object VisitDeclaration(Declaration node)
     {
         int count = Scope.Count();
-
-
         foreach (var item in node.Variable)
         {
             Console.WriteLine(item.Key);
@@ -299,7 +306,7 @@ public class Interpreter : NodeVisitor
         {
             if (left is float && right is float)
             {
-                result = Math.Pow(Convert.ToSingle(left), Convert.ToSingle(right));
+                result = (float)Math.Pow(Convert.ToSingle(left), Convert.ToSingle(right));
             }
             else Error.Semantic($"Operator \"^ \" cannot be used between not \"{left.GetType()}\" and \"{right.GetType()}\"");
 

@@ -182,7 +182,7 @@ public class Lexer
                         TokenList.Add(new Token(elements[i], TokenType.FUNCTIONS));
                         break;
                     default:
-                        if (Program2.Funciones.ContainsKey(elements[i]) || funciones.Contains(elements[i]))
+                        if (Hulk.Funciones.ContainsKey(elements[i]) || funciones.Contains(elements[i]))
                         {
                             TokenList.Add(new Token(elements[i], TokenType.CallFunction));
                         }
