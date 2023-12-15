@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Programación\\Proyectos\\Hulk\\Hulk.csproj": {}
+    "D:\\Programacion\\Proyectos\\Hulk\\Hulk.csproj": {}
   },
   "projects": {
-    "D:\\Programación\\Proyectos\\Hulk\\Hulk.csproj": {
+    "D:\\Programacion\\Proyectos\\Hulk\\Hulk.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Programación\\Proyectos\\Hulk\\Hulk.csproj",
+        "projectUniqueName": "D:\\Programacion\\Proyectos\\Hulk\\Hulk.csproj",
         "projectName": "Hulk",
-        "projectPath": "D:\\Programación\\Proyectos\\Hulk\\Hulk.csproj",
+        "projectPath": "D:\\Programacion\\Proyectos\\Hulk\\Hulk.csproj",
         "packagesPath": "C:\\Users\\Noel\\.nuget\\packages\\",
-        "outputPath": "D:\\Programación\\Proyectos\\Hulk\\obj\\",
+        "outputPath": "D:\\Programacion\\Proyectos\\Hulk\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Noel\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -53,7 +53,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.112\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.114\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -9,6 +9,7 @@ public enum TokenType
     NUMBER,
     BOOLEAN,
     STRING, 
+    PI,
 
     // Binarys Operators
 
@@ -42,8 +43,16 @@ public enum TokenType
     IF,
     ELSE,
     TRUE,
-    FLASE,
+    FALSE,
     LET,
     IN,
     PRINT,
+    THEN,
+    SEN,
+    COS,
+    LOG,
+    RETURN,
+
+    EOF,
+    CallFunction
 }
