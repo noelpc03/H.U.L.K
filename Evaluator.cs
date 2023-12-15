@@ -79,6 +79,7 @@ public abstract class NodeVisitor
 
 public class Interpreter : NodeVisitor
 {
+    double FuntionCalls;
     public Parser parser;
     public Interpreter(Parser parser)
     {
@@ -102,7 +103,11 @@ public class Interpreter : NodeVisitor
     {
 
         Dictionary<string, object> dic = new Dictionary<string, object>(Scope);
-
+        FuntionCalls++;
+        if (FuntionCalls >= 500)
+        {
+            throw new Exception("RecursionError: maximum recursion depth exceeded");
+        }
 
         if (Hulk.Funciones.ContainsKey(node.name))
         {
@@ -142,7 +147,7 @@ public class Interpreter : NodeVisitor
     }
     public override object VisitNum(Number node)
     {
-        return Convert.ToSingle(node);
+        return Convert.ToDouble(node.Value);
     }
     public override object VisitString(String node)
     {
@@ -187,9 +192,9 @@ public class Interpreter : NodeVisitor
     }
     public override object VisitSen(Sen node)
     {
-        if (Visit(node.Statement) is float x)
+        if (Visit(node.Statement) is double x)
         {
-            return (float)Math.Sin(x);
+            return Math.Sin(x);
         }
         Error.Semantic($"you can not use \"sen\" with a non doble expression");
         throw new Exception();
@@ -197,9 +202,9 @@ public class Interpreter : NodeVisitor
     }
     public override object VisitCos(Cos node)
     {
-        if (Visit(node.Statement) is float x)
+        if (Visit(node.Statement) is double x)
         {
-            return (float)Math.Cos(x);
+            return Math.Cos(x);
         }
         Error.Semantic($"you can not use \"cos\" with a non doble expression");
         throw new Exception();
@@ -224,19 +229,19 @@ public class Interpreter : NodeVisitor
         if (!(node.bases is null))
         {
             object item = Visit(node.bases);
-            if (!(item is float))
+            if (!(item is double))
             {
                 Error.Semantic("The base of logarithm is a double variable");
             }
 
-            if (Convert.ToSingle(item) <= 0 || Convert.ToSingle(item) == 1)
+            if (Convert.ToDouble(item) <= 0 || Convert.ToDouble(item) == 1)
             {
                 Error.Semantic("Logarithm to base less 0 or 1 is not defined");
             }
 
-            return (float)Math.Log(Convert.ToSingle(tree)) / (float)Math.Log(Convert.ToSingle(item));
+            return Math.Log(Convert.ToDouble(tree)) / Math.Log(Convert.ToDouble(item));
         }
-        return (float)Math.Log(Convert.ToSingle(tree));
+        return Math.Log(Convert.ToDouble(tree));
     }
 
     public override object VisitDeclaration(Declaration node)
@@ -269,51 +274,56 @@ public class Interpreter : NodeVisitor
         object right = Visit(node.right);
         if (node.signo == "+")
         {
-            if (left is float && right is float)
+            if (left is double && right is double)
             {
-                result = Convert.ToSingle(left) + Convert.ToSingle(right);
+                result = Convert.ToDouble(left) + Convert.ToDouble(right);
             }
             else Error.Semantic($"Operator \"+ \" cannot be used between not \"{left.GetType()}\" and \"{right.GetType()}\"");
         }
 
         else if (node.signo == "-")
         {
-            if (left is float && right is float)
+            if (left is double && right is double)
             {
-                result = Convert.ToSingle(left) - Convert.ToSingle(right);
+                result = Convert.ToDouble(left) - Convert.ToDouble(right);
             }
             else Error.Semantic($"Operator \"- \" cannot be used between not \"{left.GetType()}\" and \"{right.GetType()}\"");
         }
 
         else if (node.signo == "*")
         {
-            if (left is float && right is float)
+            if (left is double && right is double)
             {
-                result = Convert.ToSingle(left) * Convert.ToSingle(right);
+                result = Convert.ToDouble(left) * Convert.ToDouble(right);
             }
             else Error.Semantic($"Operator \"*\" cannot be used between not \"{left.GetType()}\" and \"{right.GetType()}\"");
         }
 
         else if (node.signo == "/")
         {
-            if (left is float && right is float)
+            if (left is double && right is double)
             {
-                result = Convert.ToSingle(left) / Convert.ToSingle(right);
+                result = Convert.ToDouble(left) / Convert.ToDouble(right);
             }
             else Error.Semantic($"Operator \"/ \" cannot be used between not \"{left.GetType()}\" and \"{right.GetType()}\"");
         }
         else if (node.signo == "^")
         {
-            if (left is float && right is float)
+            if (left is double && right is double)
             {
-                result = (float)Math.Pow(Convert.ToSingle(left), Convert.ToSingle(right));
+                result = Math.Pow(Convert.ToDouble(left), Convert.ToDouble(right));
             }
             else Error.Semantic($"Operator \"^ \" cannot be used between not \"{left.GetType()}\" and \"{right.GetType()}\"");
 
         }
         else if (node.signo == "==")
         {
-            if (left is string && right is string)
+            if (left is double && right is double)
+            {
+                result = Convert.ToDouble(left) == Convert.ToDouble(right);
+            }
+
+            else if (left is string && right is string)
             {
                 result = Convert.ToString(left) == Convert.ToString(right);
             }
@@ -329,33 +339,33 @@ public class Interpreter : NodeVisitor
         }
         else if (node.signo == "<")
         {
-            if (left is float && right is float)
+            if (left is double && right is double)
             {
-                result = Convert.ToSingle(left) < Convert.ToSingle(right);
+                result = Convert.ToDouble(left) < Convert.ToDouble(right);
             }
             else Error.Semantic($"Operator \"< \" cannot be used between not \"{left.GetType()}\" and \"{right.GetType()}\"");
         }
         else if (node.signo == ">")
         {
-            if (left is float && right is float)
+            if (left is double && right is double)
             {
-                result = Convert.ToSingle(left) > Convert.ToSingle(right);
+                result = Convert.ToDouble(left) > Convert.ToDouble(right);
             }
             else Error.Semantic($"Operator \"> \" cannot be used between not \"{left.GetType()}\" and \"{right.GetType()}\"");
         }
         else if (node.signo == "<=")
         {
-            if (left is float && right is float)
+            if (left is double && right is double)
             {
-                result = Convert.ToSingle(left) <= Convert.ToSingle(right);
+                result = Convert.ToDouble(left) <= Convert.ToDouble(right);
             }
             else Error.Semantic($"Operator \"<= \" cannot be used between not \"{left.GetType()}\" and \"{right.GetType()}\"");
         }
         else if (node.signo == ">=")
         {
-            if (left is float && right is float)
+            if (left is double && right is double)
             {
-                result = Convert.ToSingle(left) >= Convert.ToSingle(right);
+                result = Convert.ToDouble(left) >= Convert.ToDouble(right);
             }
             else Error.Semantic($"Operator \">= \" cannot be used between not \"{left.GetType()}\" and \"{right.GetType()}\"");
         }
@@ -377,7 +387,7 @@ public class Interpreter : NodeVisitor
         }
         else if (node.signo == "@")
         {
-            if (left is string && right is string)
+            if (left is not bool && right is not bool)
             {
                 result = Convert.ToString(left) + Convert.ToString(right);
             }
@@ -385,9 +395,9 @@ public class Interpreter : NodeVisitor
         }
         else if (node.signo == "%")
         {
-            if (left is float && right is float)
+            if (left is double && right is double)
             {
-                result = Convert.ToSingle(left) % Convert.ToSingle(right);
+                result = Convert.ToDouble(left) % Convert.ToDouble(right);
             }
             else Error.Semantic($"Operator \"% \" cannot be used between not \"{left.GetType()}\" and \"{right.GetType()}\"");
         }

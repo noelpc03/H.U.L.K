@@ -1,3 +1,4 @@
+//Hulk.Start("sen(PI);");
 Hulk.Main();
 
 static class Hulk
@@ -45,19 +46,19 @@ static class Hulk
 
         }
 
-
-        static void Start(string entrance)
-        {
-            Lexer lexer = new Lexer(entrance);
-            if (lexer.TokenList.Count != 0)
-            {
-                //Console.WriteLine(string.Join('\n', lexer.TokenList));
-                Parser parser = new Parser(lexer.TokenList);
-                Interpreter interpreter = new Interpreter(parser);
-                Console.WriteLine(Convert.ToString(interpreter.Interpreter0()));
-            }
-        }
-
-
     }
+    public static void Start(string entrance)
+    {
+        Lexer lexer = new Lexer(entrance);
+        if (lexer.TokenList.Count != 0)
+        {
+            //Console.WriteLine(string.Join('\n', lexer.TokenList));
+            Parser parser = new Parser(lexer.TokenList);
+            Interpreter interpreter = new Interpreter(parser);
+            Console.WriteLine(Convert.ToString(interpreter.Interpreter0()));
+        }
+    }
+
+
+
 }

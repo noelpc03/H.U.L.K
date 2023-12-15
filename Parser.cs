@@ -331,13 +331,13 @@ public class Parser
         if (actualToken.Type == TokenType.RETURN)
         {
             GetNextPosition();
-            thenstament = Not();
         }
-        else
-        {
-            thenstament = Not();
-        }
+        thenstament = Not();
         Test(TokenType.ELSE);
+        if (actualToken.Type == TokenType.RETURN)
+        {
+            GetNextPosition();
+        }
         AST elsestament = new Print(Not());
         return new Condicional(ifstament, thenstament, elsestament);
     }
