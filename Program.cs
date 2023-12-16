@@ -1,4 +1,4 @@
-//Hulk.Start("sen(PI);");
+//Hulk.Start("funtion talla(x)=>talla(x+1);");
 Hulk.Main();
 
 static class Hulk
