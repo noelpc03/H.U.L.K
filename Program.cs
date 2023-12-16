@@ -1,4 +1,3 @@
-//Hulk.Start("funtion talla(x)=>talla(x+1);");
 Hulk.Main();
 
 static class Hulk
@@ -10,7 +9,7 @@ static class Hulk
     {
 
         Console.ForegroundColor = ConsoleColor.DarkBlue;
-        Console.WriteLine("PRESIONA ENTER O ESC PARA ALGUNA FUNCION");
+        Console.WriteLine("Presiona ENTER para continuar o ESC para salir");
         while (true)
         {
 
@@ -30,7 +29,7 @@ static class Hulk
                     catch (Exception ex)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine($"{ex.Message}.Try again please.");
+                        Console.WriteLine($"{ex.Message}. Try again please.");
                     }
                     // foreach (var item in Funciones)
                     // {

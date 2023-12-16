@@ -252,15 +252,9 @@ public class Parser
         {
             Test(TokenType.COMMA);
             variable.Add(Not());
-
         }
-
-
         Test(TokenType.R_PARENT);
-
-
         return new CallFUNCTION(f, variable);
-
     }
     public AST Declaration()
     {
@@ -309,9 +303,6 @@ public class Parser
         Test(TokenType.R_PARENT);
         return new LOG(node, expression);
     }
-
-
-
     public AST Print()
     {
         GetNextPosition();
@@ -341,8 +332,6 @@ public class Parser
         AST elsestament = new Print(Not());
         return new Condicional(ifstament, thenstament, elsestament);
     }
-
-
     public void Test(TokenType type)
     {
         if (type == actualToken.GetType())

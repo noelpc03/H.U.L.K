@@ -85,6 +85,7 @@ public class Interpreter : NodeVisitor
     {
         this.parser = parser;
         Scope = new Dictionary<string, object>();
+        FuntionCalls = 0;
     }
     public Dictionary<string, object> Scope;
 
@@ -106,9 +107,8 @@ public class Interpreter : NodeVisitor
         FuntionCalls++;
         if (FuntionCalls >= 500)
         {
-            throw new Exception("RecursionError: maximum recursion depth exceeded");
+            throw new Exception("RecursionError: maximum resursion number exceeded");
         }
-
         if (Hulk.Funciones.ContainsKey(node.name))
         {
             int i = 0;
@@ -138,7 +138,6 @@ public class Interpreter : NodeVisitor
 
             object tree = Visit(Hulk.Funciones[node.name].Statement);
             Scope = dic;
-            // while (Scope.Count() > count) Scope.Remove(Scope.Keys.Last());
             return tree;
         }
 
@@ -160,7 +159,7 @@ public class Interpreter : NodeVisitor
         {
             return !x;
         }
-        else if (right is float)
+        else if (right is double)
         {
             Error.Semantic($"Unary Operator \"! \" cannot be used with number");
         }
@@ -303,7 +302,11 @@ public class Interpreter : NodeVisitor
         {
             if (left is double && right is double)
             {
-                result = Convert.ToDouble(left) / Convert.ToDouble(right);
+                if (Convert.ToDouble(right) != 0)
+                {
+                    result = Convert.ToDouble(left) / Convert.ToDouble(right);
+                }
+                else throw new Exception("\"/\" by 0 is not defined");
             }
             else Error.Semantic($"Operator \"/ \" cannot be used between not \"{left.GetType()}\" and \"{right.GetType()}\"");
         }
@@ -397,7 +400,11 @@ public class Interpreter : NodeVisitor
         {
             if (left is double && right is double)
             {
-                result = Convert.ToDouble(left) % Convert.ToDouble(right);
+                if (Convert.ToDouble(right) != 0)
+                {
+                    result = Convert.ToDouble(left) % Convert.ToDouble(right);
+                }
+                else throw new Exception("\"%\" by 0 is not defined");
             }
             else Error.Semantic($"Operator \"% \" cannot be used between not \"{left.GetType()}\" and \"{right.GetType()}\"");
         }
