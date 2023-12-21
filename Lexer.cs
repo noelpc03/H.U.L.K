@@ -6,10 +6,10 @@ public class Lexer
     public List<string> entrance = new List<string>(); // va a contener a los elementos de la entrada
     public List<Token> TokenList = new List<Token>(); // contendra a los tokens 
 
-    public static List<string> funciones; // se van guardando las funciones declaradas 
+    public static List<string> functions; // se van guardando las funciones declaradas 
     public Lexer(string text)
     {
-        funciones = new List<string>();
+        functions = new List<string>();
         Fill(text, entrance);
         Tokenizer(entrance, TokenList);
     }
@@ -182,14 +182,14 @@ public class Lexer
                         TokenList.Add(new Token(elements[i], TokenType.FUNCTIONS));
                         break;
                     default:
-                        if (Hulk.Funciones.ContainsKey(elements[i]) || funciones.Contains(elements[i]))
+                        if (Hulk.Functions.ContainsKey(elements[i]) || functions.Contains(elements[i]))
                         {
                             TokenList.Add(new Token(elements[i], TokenType.CallFunction));
                         }
                         else
                         {
                             TokenList.Add(new Token(elements[i], TokenType.VAR));
-                            if (i > 0 && elements[i - 1] == "function") funciones.Add(elements[i]);
+                            if (i > 0 && elements[i - 1] == "function") functions.Add(elements[i]);
                         }
 
                         break;

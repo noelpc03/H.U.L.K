@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Security.AccessControl;
 using System.Security.Cryptography.X509Certificates;
 
-public class AST { }
+public class AST { } // se define la estructura del arbol
 
 public class Instruccion : AST
 {
@@ -29,7 +29,7 @@ public class FUNCTION : AST
         name = names.Value;
         this.argumentos = argumentos;
         this.Statement = Statement;
-        Hulk.Funciones.Add(names.Value, this);
+        Hulk.Functions.Add(names.Value, this);
     }
 
 

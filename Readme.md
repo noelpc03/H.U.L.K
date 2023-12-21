@@ -3,7 +3,7 @@ HULK es un lenguaje de programación imperativo, funcional, estática y fuerteme
 Para realizar la evaluacion de la instrucción debe pasar por varios pasos: Lexer, Parser y Evaluador
 
 # Importante
-Hulk cuenta con una aplicación de consola, la cual se inicia al escribiir en consola "dotnet run".
+Hulk cuenta con una aplicación de consola, la cual se inicia al escribir en consola "dotnet run".
 
 # Lexer (Análisis lexicográfico)
 Este proceso recibe la entrada en un string y su labor es desglozarla y crear los tokens según su tipo y valor. Los tokens validos se encuentran almacenados en un ENUM, por lo que todos los que no pertenezcan a esa estructura serán detectados como invalidos y el programa mostrará un error lexico. 

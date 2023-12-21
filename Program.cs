@@ -3,13 +3,14 @@ Hulk.Main();
 static class Hulk
 {
 
-    public static Dictionary<string, FUNCTION> Funciones = new Dictionary<string, FUNCTION>();
+    public static Dictionary<string, FUNCTION> Functions = new Dictionary<string, FUNCTION>();
 
-    public static void Main()
+    public static void Main() // Aplicacion de consola
     {
 
         Console.ForegroundColor = ConsoleColor.DarkBlue;
-        Console.WriteLine("Presiona ENTER para continuar o ESC para salir");
+        Console.WriteLine("Presiona ENTER para continuar o ESC para salir");     
+        
         while (true)
         {
 
@@ -39,6 +40,7 @@ static class Hulk
 
                 else if (key == ConsoleKey.Escape)
                 {
+                    Console.ForegroundColor = ConsoleColor.White;
                     break;
                 }
             }
@@ -46,15 +48,15 @@ static class Hulk
         }
 
     }
-    public static void Start(string entrance)
+    public static void Start(string entrance) // Metodo que controla todo el proceso
     {
         Lexer lexer = new Lexer(entrance);
         if (lexer.TokenList.Count != 0)
         {
-            //Console.WriteLine(string.Join('\n', lexer.TokenList));
+            // Console.WriteLine(string.Join('\n', lexer.TokenList));
             Parser parser = new Parser(lexer.TokenList);
             Interpreter interpreter = new Interpreter(parser);
-            Console.WriteLine(Convert.ToString(interpreter.Interpreter0()));
+            Console.WriteLine(Convert.ToString(interpreter.InterpreterMain()));
         }
     }
 

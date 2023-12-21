@@ -9,7 +9,7 @@ public abstract class NodeVisitor
         }
         if (node is CallFUNCTION)
         {
-            return VisitCallFunctiones((CallFUNCTION)node);
+            return VisitCallFunctions((CallFUNCTION)node);
         }
         if (node is Number)
         {
@@ -73,34 +73,34 @@ public abstract class NodeVisitor
     public abstract object VisitLog(LOG node);
     public abstract object VisitDeclaration(Declaration node);
     public abstract object VisitVar(Var node);
-    public abstract object VisitCallFunctiones(CallFUNCTION node);
+    public abstract object VisitCallFunctions(CallFUNCTION node);
     public abstract object VisitInstruccion(Instruccion node);
 }
 
-public class Interpreter : NodeVisitor
+public class Interpreter : NodeVisitor // interprete
 {
-    double FuntionCalls;
-    public Parser parser;
+    double FuntionCalls; // cuenta el numero de llamados a la funcion 
+    public Parser parser; 
     public Interpreter(Parser parser)
     {
         this.parser = parser;
         Scope = new Dictionary<string, object>();
         FuntionCalls = 0;
     }
-    public Dictionary<string, object> Scope;
+    public Dictionary<string, object> Scope; // Guarda variables y funciones
 
-    public object Interpreter0()
+    public object InterpreterMain() // metodo que realiza el proceso del interprete
     {
         AST tree = parser.Instruccion();
         //Console.WriteLine(tree);
         return Visit(tree);
     }
-    public override object VisitInstruccion(Instruccion node)
+    public override object VisitInstruccion(Instruccion node) // evaluacion de una instruccion
     {
         return Visit(node.node);
     }
 
-    public override object VisitCallFunctiones(CallFUNCTION node)
+    public override object VisitCallFunctions(CallFUNCTION node) // evaluacion del llamado de una funcion
     {
 
         Dictionary<string, object> dic = new Dictionary<string, object>(Scope);
@@ -109,11 +109,11 @@ public class Interpreter : NodeVisitor
         {
             throw new Exception("RecursionError: maximum resursion number exceeded");
         }
-        if (Hulk.Funciones.ContainsKey(node.name))
+        if (Hulk.Functions.ContainsKey(node.name))
         {
             int i = 0;
 
-            Dictionary<string, object> local = new Dictionary<string, object>(Hulk.Funciones[node.name].argumentos);
+            Dictionary<string, object> local = new Dictionary<string, object>(Hulk.Functions[node.name].argumentos);
             // se crea un diccionario local para modificar los valores de local sin cambiar los de la variable estatica
 
 
@@ -136,7 +136,7 @@ public class Interpreter : NodeVisitor
             }
             Scope = local;
 
-            object tree = Visit(Hulk.Funciones[node.name].Statement);
+            object tree = Visit(Hulk.Functions[node.name].Statement);
             Scope = dic;
             return tree;
         }
@@ -144,15 +144,15 @@ public class Interpreter : NodeVisitor
 
         return 0;
     }
-    public override object VisitNum(Number node)
+    public override object VisitNum(Number node) // evaluacion de un numero
     {
         return Convert.ToDouble(node.Value);
     }
-    public override object VisitString(String node)
+    public override object VisitString(String node) // evaluacion de un string
     {
         return Convert.ToString(node.Value)!;
     }
-    public override object VisitUnaryOparator(UnaryOparator node)
+    public override object VisitUnaryOparator(UnaryOparator node) // evaluacion del operador binario "!"
     {
         object right = Visit(node.right);
         if (right is bool x)
@@ -167,11 +167,11 @@ public class Interpreter : NodeVisitor
         throw new Exception();
 
     }
-    public override object VisitBoolean(Bool node)
+    public override object VisitBoolean(Bool node) // evaluacion de buleanos
     {
         return Convert.ToBoolean(node.Value);
     }
-    public override object VisitConditional(Condicional node)
+    public override object VisitConditional(Condicional node) // evaluacion de condicionales
     {
         if (Visit(node.IFStatement) is bool x)
         {
@@ -185,11 +185,11 @@ public class Interpreter : NodeVisitor
         throw new Exception();
 
     }
-    public override object VisitPrint(Print node)
+    public override object VisitPrint(Print node) // evaluacion del operador "print"
     {
         return Visit(node.Compound);
     }
-    public override object VisitSen(Sen node)
+    public override object VisitSen(Sen node) // evaluacion del operador "sen"
     {
         if (Visit(node.Statement) is double x)
         {
@@ -199,7 +199,7 @@ public class Interpreter : NodeVisitor
         throw new Exception();
 
     }
-    public override object VisitCos(Cos node)
+    public override object VisitCos(Cos node) // evaluacion del operador "cos"
     {
         if (Visit(node.Statement) is double x)
         {
@@ -208,7 +208,7 @@ public class Interpreter : NodeVisitor
         Error.Semantic($"you can not use \"cos\" with a non doble expression");
         throw new Exception();
     }
-    public override object VisitLog(LOG node)
+    public override object VisitLog(LOG node) // evaluacion del operador "Log"
     {
         if (node.bases is null && node.Statement is null)
         {
@@ -225,25 +225,21 @@ public class Interpreter : NodeVisitor
             Error.Semantic("The arg of the logarithm function is less than 0");
         }
 
-        if (!(node.bases is null))
+        object item = Visit(node.bases);
+        if (!(item is double))
         {
-            object item = Visit(node.bases);
-            if (!(item is double))
-            {
-                Error.Semantic("The base of logarithm is a double variable");
-            }
-
-            if (Convert.ToDouble(item) <= 0 || Convert.ToDouble(item) == 1)
-            {
-                Error.Semantic("Logarithm to base less 0 or 1 is not defined");
-            }
-
-            return Math.Log(Convert.ToDouble(tree)) / Math.Log(Convert.ToDouble(item));
+            Error.Semantic("The base of logarithm is a double variable");
         }
-        return Math.Log(Convert.ToDouble(tree));
+
+        if (Convert.ToDouble(item) <= 0 || Convert.ToDouble(item) == 1)
+        {
+            Error.Semantic("Logarithm to base less 0 or 1 is not defined");
+        }
+
+        return Math.Log(Convert.ToDouble(tree), Convert.ToDouble(item));
     }
 
-    public override object VisitDeclaration(Declaration node)
+    public override object VisitDeclaration(Declaration node) // evaluacion de una declaracion de variables
     {
         int count = Scope.Count();
         foreach (var item in node.Variable)
@@ -255,7 +251,7 @@ public class Interpreter : NodeVisitor
         while (Scope.Count() > count) Scope.Remove(Scope.Keys.Last());
         return output;
     }
-    public override object VisitVar(Var node)
+    public override object VisitVar(Var node) // evaluacion de variables
     {
         if (Scope.ContainsKey(node.Name))
         {
@@ -265,7 +261,7 @@ public class Interpreter : NodeVisitor
         Error.Semantic($"Varible \"{node.Name}\" was not found");
         throw new Exception();
     }
-    public override object VisitBinaryOperator(BinaryOperator node)
+    public override object VisitBinaryOperator(BinaryOperator node) // evaluacion de operadores binarios
     {
         object result = 0;
 

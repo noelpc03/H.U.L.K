@@ -4,7 +4,6 @@ public class Parser
 {
     List<Token> TokenList;
     Token actualToken;
-    //object actualValue;
     int position;
     public Parser(List<Token> tokenList)
     {
@@ -12,7 +11,7 @@ public class Parser
         position = 0;
         actualToken = TokenList[position];
     }
-    public AST Instruccion()
+    public AST Instruccion() // cima de la jerarquia
     {
 
         Instruccion node = new Instruccion(Not());
@@ -28,7 +27,7 @@ public class Parser
         return node;
 
     }
-    public AST Not()
+    public AST Not() // operador "!"
     {
         while (actualToken.Type == TokenType.NOT)
         {
@@ -39,7 +38,7 @@ public class Parser
         return AndOr();
 
     }
-    public AST AndOr()
+    public AST AndOr() // operadores "&" y "|"
     {
         AST node = Operator();
         if (actualToken.Type == TokenType.OR || actualToken.Type == TokenType.AND)
@@ -50,7 +49,7 @@ public class Parser
         }
         return node;
     }
-    public AST Operator()
+    public AST Operator() // operadores binarios
     {
         AST node = SumAndRest();
         while (actualToken.Type == TokenType.EQUALS || actualToken.Type == TokenType.DIFFERENT || actualToken.Type == TokenType.GREATER || actualToken.Type == TokenType.GREATER_EQUAL || actualToken.Type == TokenType.LESS || actualToken.Type == TokenType.LESS_EQUAL)
@@ -85,7 +84,7 @@ public class Parser
         return node;
     }
 
-    public AST SumAndRest()
+    public AST SumAndRest() // suma y resta
     {
         AST node = MultAndDiv();
         while (actualToken.Type == TokenType.PLUS || actualToken.Type == TokenType.MINUS || actualToken.Type == TokenType.CONCAT)
@@ -108,7 +107,7 @@ public class Parser
         }
         return node;
     }
-    public AST MultAndDiv()
+    public AST MultAndDiv() // multiplicacion y division
     {
         AST node = Pow();
         while (actualToken.Type == TokenType.MULT || actualToken.Type == TokenType.DIV || actualToken.Type == TokenType.MOD)
@@ -130,7 +129,7 @@ public class Parser
         }
         return node;
     }
-    public AST Pow()
+    public AST Pow() // potencia
     {
         AST node = Factor();
         while (actualToken.Type == TokenType.POW)
@@ -145,7 +144,7 @@ public class Parser
         return node;
     }
 
-    public AST Factor()
+    public AST Factor() // signos terminales
     {
         AST node = new AST();
 
@@ -209,7 +208,7 @@ public class Parser
         return node;
     }
 
-    public AST Function()
+    public AST Function() 
     {
         Test(TokenType.FUNCTIONS);
         Token f = actualToken;
@@ -256,7 +255,7 @@ public class Parser
         Test(TokenType.R_PARENT);
         return new CallFUNCTION(f, variable);
     }
-    public AST Declaration()
+    public AST Declaration() // declaracion de variables
     {
         Test(TokenType.LET);
         Dictionary<string, AST> variables = new Dictionary<string, AST>();
@@ -332,17 +331,16 @@ public class Parser
         AST elsestament = new Print(Not());
         return new Condicional(ifstament, thenstament, elsestament);
     }
-    public void Test(TokenType type)
+    public void Test(TokenType type) // metodo para verificar que el token actual es el esperado
     {
         if (type == actualToken.GetType())
         {
-            // actualValue = actualToken.Value;
             GetNextPosition();
         }
         else Error.Syntax($"unexpected token:{actualToken.Type}. Expected: {type}");
     }
 
-    public void GetNextPosition()
+    public void GetNextPosition() // metodo para pasar al siguiente token
     {
         position++;
         if (position < TokenList.Count()) actualToken = TokenList[position];
