@@ -1,0 +1,15 @@
+D:\Programacion\Proyectos\Hulk\bin\Debug\net8.0\Hulk.exe
+D:\Programacion\Proyectos\Hulk\bin\Debug\net8.0\Hulk.deps.json
+D:\Programacion\Proyectos\Hulk\bin\Debug\net8.0\Hulk.runtimeconfig.json
+D:\Programacion\Proyectos\Hulk\bin\Debug\net8.0\Hulk.dll
+D:\Programacion\Proyectos\Hulk\bin\Debug\net8.0\Hulk.pdb
+D:\Programacion\Proyectos\Hulk\obj\Debug\net8.0\Hulk.GeneratedMSBuildEditorConfig.editorconfig
+D:\Programacion\Proyectos\Hulk\obj\Debug\net8.0\Hulk.AssemblyInfoInputs.cache
+D:\Programacion\Proyectos\Hulk\obj\Debug\net8.0\Hulk.AssemblyInfo.cs
+D:\Programacion\Proyectos\Hulk\obj\Debug\net8.0\Hulk.csproj.CoreCompileInputs.cache
+D:\Programacion\Proyectos\Hulk\obj\Debug\net8.0\Hulk.sourcelink.json
+D:\Programacion\Proyectos\Hulk\obj\Debug\net8.0\Hulk.dll
+D:\Programacion\Proyectos\Hulk\obj\Debug\net8.0\refint\Hulk.dll
+D:\Programacion\Proyectos\Hulk\obj\Debug\net8.0\Hulk.pdb
+D:\Programacion\Proyectos\Hulk\obj\Debug\net8.0\Hulk.genruntimeconfig.cache
+D:\Programacion\Proyectos\Hulk\obj\Debug\net8.0\ref\Hulk.dll
